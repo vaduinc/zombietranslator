@@ -19,11 +19,14 @@ $(document).ready(function(){
     // 6. "o" or "O" is replaced by "rrrRr"
     // 7. "u" or "U" is replaced by "rrrrRr"
     // 8. "r" or "R' is replaced by "RR"
+    $('#zombie').val($('#english').val());
   }
 
   function unzombify(){
 
 
   }
+
+  $('#english').on("keyup", zombify);
 
 });
