@@ -7,25 +7,24 @@
 
     <title>Zombie Translator</title>
 
-    <link rel="stylesheet" href="../week2/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../week2/css/main.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <script src="js/vendors/jquery.min.js"></script>
     <script src="js/vendors/bootstrap.min.js"></script>
     <script src="js/app.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="row">
+        <div class="row well">
             <div class="col-md-6">
                 <form id="english-to-zombie-form">
-                    <input type="text" id="english" />
-                    <button type="submit" id="english-to-zombie-btn">Translate</button>
+                    <label for="english">English</label>
+                    <textarea class="form-control" id="english"></textarea>
                 </form>
             </div>
             <div class="col-md-6">
                 <form id="zombie-to-english-form">
-                    <input type="text" id="zombie" />
-                    <button type="submit" id="zombie-to-english-btn">Translate</button>
+                    <label for="zombie">Zombie</label>
+                    <textarea class="form-control" id="zombie"></textarea>
                 </form>
             </div>
         </div>
