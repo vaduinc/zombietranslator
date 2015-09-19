@@ -1,4 +1,7 @@
 $(document).ready(function(){
+
+  var ruleProcService = new RuleProcessorService();
+
   $('#zombie-to-english-btn').click(function(event){
     unzombify();
     return false;
@@ -9,8 +12,18 @@ $(document).ready(function(){
     return false;
   });
 
-  function zombify(){
-    // 1. lower-case "r" at the end of words replaced with "rh".
+  function zombify() {
+
+    var original = $('#english').val();
+    var resultTranslation = '';
+
+    for (var index = 0 ; index < original.length ; index++){
+        resultTranslation = ruleProcService.runRules(original.substring(0,index+1),resultTranslation);
+    }
+
+    $('#zombie').val(resultTranslation);
+
+    // 1. lower-case "r" at the end of words replaced with "rh". car los !
     // 2. an "a" or "A" by itself will be replaced with "hra".
     // 3. the starts of sentences are capitalised (the "start of a sentence" is any occurrence of
     //   ".!?", followed by a space, followed by a letter.)
@@ -19,14 +32,19 @@ $(document).ready(function(){
     // 6. "o" or "O" is replaced by "rrrRr"
     // 7. "u" or "U" is replaced by "rrrrRr"
     // 8. "r" or "R' is replaced by "RR"
-    $('#zombie').val($('#english').val());
-  }
+
+
+  };
 
   function unzombify(){
 
 
-  }
+  };
 
   $('#english').on("keyup", zombify);
+
+    //$('#english').keydown(function(event){
+    //    zombify(event);
+    //});
 
 });
