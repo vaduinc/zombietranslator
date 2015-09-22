@@ -33,12 +33,7 @@ define(['jquery', 'RuleProcessorService'], function($, RuleProcessorService){
   TranslatorView.prototype.zombify = function () {
 
     var that = this;
-    var original = $('#english').val();
-    var resultTranslation = '';
-
-    for (var index = 0 ; index < original.length ; index++){
-        resultTranslation = that.ruleProcService.runRules(original.substring(0,index+1),resultTranslation);
-    }
+    var resultTranslation = that.ruleProcService.translate($('#english').val());
 
     $('#zombie').val(resultTranslation);
 

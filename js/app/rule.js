@@ -4,7 +4,7 @@
 
 define(['RuleResult'], function(RuleResult){
 
-    var Rule = function(patt,pattLen,isRegexp,replace,isPostCheck){
+    var Rule = function(patt,pattLen,isRegexp,replace){
 
         this.pattern = patt;
         this.patternLength = pattLen;
