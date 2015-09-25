@@ -7,36 +7,16 @@ define(['Rule', 'RuleResult'], function(Rule,RuleResult){
         this.rules = [];
 
         // ORDER of rules matters
-        this.rules.push(new Rule(/(r|R)/,
-            1,
-            true,
-            "RR",
-            function(source, index, len){
-                if (source.length==index+1){
-                    return source.substring(0,index+1).slice((-1)*1);
-                }else{
-                    return source.substring(0,index+2).slice((-1)*2);
-                }
-            },
-            [new Rule(/r\b/,1,true,"rh",
-                function(source, index, len){
-                    if (source.length==index+1){
-                        return source.substring(0,index+1).slice((-1)*1);
-                    }else{
-                        return source.substring(0,index+2).slice((-1)*2);
-                    }
-                })
-            ]));
-
+        this.rules.push(new Rule(/R/, 1, true, "RR"));
         //this.rules.push(new Rule(/r\s/,2,true,"rh "));
-        //this.rules.push(new Rule(/r\b/,2,true,"rh"));
+        this.rules.push(new Rule(/r/,1,true,"rh",function(){}));
         //this.rules.push(new Rule(/(r|R)[^\s]/,2,false,function(val){return 'RR' +  this.runRules(val.substring(val.length-1),'');}));
-        this.rules.push(new Rule(/a|A/,1,true,"hra",function(val1, val2, val3){return val1.substring(0,val2+1).slice((-1)*val3);}));
-        this.rules.push(new Rule(/[\.|\!|\?]+\s{1}[a-zA-Z]/,3,false,function(val){return val.toUpperCase();},function(val1, val2, val3){return val1.substring(0,val2+1).slice((-1)*val3);}));
-        this.rules.push(new Rule(/e|E/,1,true,"rr",function(val1, val2, val3){return val1.substring(0,val2+1).slice((-1)*val3);}));
-        this.rules.push(new Rule(/i|I/,1,true,"rrRr",function(val1, val2, val3){return val1.substring(0,val2+1).slice((-1)*val3);}));
-        this.rules.push(new Rule(/o|O/,1,true,"rrrRr",function(val1, val2, val3){return val1.substring(0,val2+1).slice((-1)*val3);}));
-        this.rules.push(new Rule(/u|U/,1,true,"rrrrRr",function(val1, val2, val3){return val1.substring(0,val2+1).slice((-1)*val3);}));
+        this.rules.push(new Rule(/a|A/,1,true,"hra"));
+        this.rules.push(new Rule(/[\.|\!|\?]+\s{1}[a-zA-Z]/,3,false,function(val){return val.toUpperCase();}));
+        this.rules.push(new Rule(/e|E/,1,true,"rr"));
+        this.rules.push(new Rule(/i|I/,1,true,"rrRr"));
+        this.rules.push(new Rule(/o|O/,1,true,"rrrRr"));
+        this.rules.push(new Rule(/u|U/,1,true,"rrrrRr"));
 
     };
 
