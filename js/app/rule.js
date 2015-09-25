@@ -4,25 +4,39 @@
 
 define(['RuleResult'], function(RuleResult){
 
-    var Rule = function(patt,pattLen,isRegexp,replace){
+    var Rule = function(patt,pattLen,isRegexp,replace,portion,conflicts){
 
         this.pattern = patt;
         this.patternLength = pattLen;
         this.isRegexp = isRegexp;
         this.replacement = replace;
+        this.subPortion = portion;
+        this.conflicts = conflicts;
     };
 
-    Rule.prototype.execute = function(source, target){
+    Rule.prototype.execute = function(source, index, target){
 
         var that = this;
         var executionResult = new RuleResult();
         executionResult.transformed = '';
 
-        var sectionToCheck = source.slice((-1)*that.patternLength); // get the last * characters based on the pattern
+        //var subSource = source.substring(0,index+1);
+        //var sectionToCheck = subSource.slice((-1)*that.patternLength); // get the last Y characters based on the pattern
+
+        var sectionToCheck = that.subPortion(source,index,that.patternLength);
         var patternToMatch = new RegExp(that.pattern);
         var pos = sectionToCheck.search(patternToMatch);
 
         if (pos != -1) {
+
+            if (that.conflicts){
+                var executionResult2 = that.conflicts[0].execute(source,index,target);
+                console.log("executionResult2 : " + executionResult2.transformed );
+                if(executionResult2.changed){
+                    return executionResult2;
+                }
+            }
+
             executionResult.changed=true;
             if (that.isRegexp){
                 executionResult.appended = sectionToCheck.replace(patternToMatch,that.replacement);
