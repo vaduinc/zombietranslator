@@ -8,9 +8,17 @@ define(['Rule', 'RuleResult'], function(Rule,RuleResult){
 
         // ORDER of rules matters
         this.rules.push(new Rule(/R/, 1, true, "RR"));
-        //this.rules.push(new Rule(/r\s/,2,true,"rh "));
-        this.rules.push(new Rule(/r/,1,true,"rh",function(){}));
-        //this.rules.push(new Rule(/(r|R)[^\s]/,2,false,function(val){return 'RR' +  this.runRules(val.substring(val.length-1),'');}));
+        this.rules.push(new Rule(/r/,1,true,"rh",
+            function (len,idx,rule){
+                if (len==idx){
+                    rule.pattern=/r\b/;
+                    rule.replacement = "rh";
+                }else{
+                    rule.pattern=/r/;
+                    rule.replacement = "RR";
+                }
+            }
+        ));
         this.rules.push(new Rule(/a|A/,1,true,"hra"));
         this.rules.push(new Rule(/[\.|\!|\?]+\s{1}[a-zA-Z]/,3,false,function(val){return val.toUpperCase();}));
         this.rules.push(new Rule(/e|E/,1,true,"rr"));
@@ -25,7 +33,6 @@ define(['Rule', 'RuleResult'], function(Rule,RuleResult){
         var that = this;
         var resultTranslation ='';
         for (var index = 0 ; index < source.length ; index++){
-            //resultTranslation = that.runRules(source.substring(0,index+1),resultTranslation);
             resultTranslation = that.runRules(source,index,resultTranslation);
         }
 

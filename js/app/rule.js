@@ -10,9 +10,6 @@ define(['RuleResult'], function(RuleResult){
         this.patternLength = pattLen;
         this.isRegexp = isRegexp;
         this.replacement = replace;
-
-        //,portion,conflicts
-        //this.subPortion = portion;
         this.conflicts = conflicts;
     };
 
@@ -22,35 +19,16 @@ define(['RuleResult'], function(RuleResult){
         var executionResult = new RuleResult();
         executionResult.transformed = '';
 
-        var subSource = source.substring(0,index+1);
-        var sectionToCheck = subSource.slice((-1)*that.patternLength); // get the last Y characters based on the pattern
+        var sectionToCheck = source.substring(0,index+1).slice((-1)*that.patternLength); // get the last Y characters based on the pattern
 
         if (that.conflicts){
-
-            if (source.length==index+1){
-                that.pattern=/r\b/;
-                that.replacement = "rh";
-            }else{
-                that.pattern=/r/;
-                that.replacement = "RR";
-            }
-
+            that.conflicts(source.length,index+1,that);
         }
 
-
-       // var sectionToCheck = that.subPortion(source,index,that.patternLength);
         var patternToMatch = new RegExp(that.pattern);
         var pos = sectionToCheck.search(patternToMatch);
 
         if (pos != -1) {
-
-            //if (that.conflicts){
-            //    var executionResult2 = that.conflicts[0].execute(source,index,target);
-            //    console.log("executionResult2 : " + executionResult2.transformed );
-            //    if(executionResult2.changed){
-            //        return executionResult2;
-            //    }
-            //}
 
             executionResult.changed=true;
             if (that.isRegexp){
