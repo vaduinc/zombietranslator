@@ -1,37 +1,38 @@
 define(['Rule','RuleResult'], function(Rule,RuleResult){
-  var rule;
+ var ruleR,ruleA;
 
   describe('Rules', function(){
-    //beforeEach(function(){
-    //  var store = {};
-    //  spyOn(sessionStorage, "getItem").and.callFake(function(key){
-    //    return store[key] || '[]';
-    //  });
-    //  spyOn(sessionStorage, "setItem").and.callFake(function(key, value){
-    //    store[key] = value + '';
-    //  });
-    //  spyOn(sessionStorage, "clear").and.callFake(function(){
-    //    store = {};
-    //  });
-    //  sessionStorage.clear();
-    //
-    //  playlist = new Playlist();
-    //
-    //});
+
+      beforeEach(function(){
+
+        ruleR = new Rule(/r/,1,true,"rh",
+            function (len,idx,obj){
+                if (len==idx){
+                    obj.pattern=/r\b/;
+                    obj.replacement = "rh";
+                }else{
+                    obj.pattern=/r/;
+                    obj.replacement = "RR";
+                }
+            }
+        );
+
+        ruleA = new Rule(/a|A/,1,true,"hra");
+
+    });
 
       describe('rule', function(){
-          it('should replace last "r " by "rh " ', function(){
+          it('should replace last "r" by "rh" ', function(){
 
-              rule = new Rule(/r\s/,2,true,"rh ");
-              ruleResult = rule.execute('r ','');
 
-              expect(ruleResult.transformed).toBe('rh ');
+              var ruleResult = ruleR.execute('r',0,'');
+
+              expect(ruleResult.transformed).toBe('rh');
           });
 
           it('should replace last "a" by "hra" ', function(){
 
-              rule = new Rule(/a|A/,1,true,"hra");
-              ruleResult = rule.execute('a','');
+              var ruleResult = ruleA.execute('a',1,'');
 
               expect(ruleResult.transformed).toBe('hra');
           });

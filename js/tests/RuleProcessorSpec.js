@@ -3,13 +3,53 @@ define(['RuleProcessorService','RuleResult'], function(RuleProcessorService,Rule
 
   describe('RuleProcessorService', function(){
 
+      beforeEach(function(){
+
+          ruleProcessorService = new RuleProcessorService();
+
+      });
+
       describe('ruleProcessorService', function(){
-          it('should replace "jaime. reyes pal" by "jhrarrRrmrr. Rrryrrs phral" ', function(){
+          it('should replace "Terror" by "TrrRRRRrrrRrrh" ', function(){
 
-              ruleProcessorService = new RuleProcessorService();
-              targetOuput = ruleProcessorService.translate('jaime. reyes pal');
+              targetOuput = ruleProcessorService.translate('Terror');
 
-              expect(targetOuput).toBe('jhrarrRrmrr. Rrryrrs phral');
+              expect(targetOuput).toBe('TrrRRRRrrrRrrh');
+          });
+
+          it('should replace "JaZahn" by "JhraZhrahn" ', function(){
+
+              targetOuput = ruleProcessorService.translate('JaZahn');
+
+              expect(targetOuput).toBe('JhraZhrahn');
+          });
+
+          it('should replace "petty" by "prrtty" ', function(){
+
+              targetOuput = ruleProcessorService.translate('petty');
+
+              expect(targetOuput).toBe('prrtty');
+          });
+
+          it('should replace "pretty" by "pRRrrtty" ', function(){
+
+              targetOuput = ruleProcessorService.translate('pretty');
+
+              expect(targetOuput).toBe('pRRrrtty');
+          });
+
+          it('should replace "brains" by "bRRhrarrRrns" ', function(){
+
+              targetOuput = ruleProcessorService.translate('brains');
+
+              expect(targetOuput).toBe('bRRhrarrRrns');
+          });
+
+          it('should replace "onomatopoeia" by "rrrRrnrrrRrmhratrrrRrprrrRrrrrrRrhra" ', function(){
+
+              targetOuput = ruleProcessorService.translate('onomatopoeia');
+
+              expect(targetOuput).toBe('rrrRrnrrrRrmhratrrrRrprrrRrrrrrRrhra');
           });
 
       });
