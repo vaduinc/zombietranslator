@@ -1,31 +1,11 @@
 /**
  * Created by jaimevalencia on 9/19/15.
  */
-define(['Rule', 'RuleResult'], function(Rule,RuleResult){
+define(['Rule', 'RuleResult','RulesDefinition'], function(Rule,RuleResult,RulesDefinition){
 
     var RuleProcessorService = function(){
-        this.rules = [];
-
-        // ORDER of rules matters
-        this.rules.push(new Rule(/R/, 1, true, "RR"));
-        this.rules.push(new Rule(/r/,1,true,"rh",
-            function (len,idx,rule){
-                if (len==idx){
-                    rule.pattern=/r\b/;
-                    rule.replacement = "rh";
-                }else{
-                    rule.pattern=/r/;
-                    rule.replacement = "RR";
-                }
-            }
-        ));
-        this.rules.push(new Rule(/a|A/,1,true,"hra"));
-        this.rules.push(new Rule(/[\.|\!|\?]+\s{1}[a-zA-Z]/,3,false,function(val){return val.toUpperCase();}));
-        this.rules.push(new Rule(/e|E/,1,true,"rr"));
-        this.rules.push(new Rule(/i|I/,1,true,"rrRr"));
-        this.rules.push(new Rule(/o|O/,1,true,"rrrRr"));
-        this.rules.push(new Rule(/u|U/,1,true,"rrrrRr"));
-
+        new RulesDefinition(); // Make the constructor run, so rules are defined
+        this.rules = RulesDefinition.getRuleCollection();
     };
 
     RuleProcessorService.prototype.translate = function(source){
@@ -40,7 +20,6 @@ define(['Rule', 'RuleResult'], function(Rule,RuleResult){
     }
 
 
-    // TODO leave this one as private
     RuleProcessorService.prototype.runRules = function(source,index,target){
 
         var that = this;
